@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Envoyer une photo ou vidéo</title>
+</head>
+<body>
+  <h2>Envoie ton fichier 📸📹</h2>
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="media" accept="image/*,video/*" required><br><br>
+    <button type="submit">Envoyer</button>
+  </form>
+  <p style="color: green;">
+    <script>
+      if (new URLSearchParams(window.location.search).has("success")) {
+        document.write("✅ Fichier envoyé avec succès !");
+      }
+    </script>
+  </p>
+</body>
+</html>

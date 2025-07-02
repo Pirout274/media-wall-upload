@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Affichage média</title>
+  <style>
+    body { background: black; color: white; text-align: center; }
+    img, video { max-height: 90vh; margin: 1em; }
+  </style>
+</head>
+<body>
+  <h1>🎥 Affichage en direct</h1>
+  <div id="media-zone"></div>
+
+  <script>
+    async function fetchMedia() {
+      const res = await fetch('/latest');
+      const files = await res.json();
+      const zone = document.getElementById('media-zone');
+      zone.innerHTML = '';
+      files.forEach(file => {
+        const ext = file.split('.').pop();
+        if (['mp4', 'mov', 'webm'].includes(ext)) {
+          const vid = document.createElement('video');
+          vid.src = `/uploads/${file}`;
+          vid.controls = true;
+          vid.autoplay = true;
+          vid.loop = true;
+          zone.appendChild(vid);
+        } else {
+          const img = document.createElement('img');
+          img.src = `/uploads/${file}`;
+          zone.appendChild(img);
+        }
+      });
+    }
+    fetchMedia();
+    setInterval(fetchMedia, 10000); // toutes les 10 sec
+  </script>
+</body>
+</html>
